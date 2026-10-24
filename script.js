@@ -38,20 +38,24 @@ function filterAboveAverage(arr) {
     return result;
 }
 
+function countAnomalies(arr) {
+    const max = findMax(arr);
+    const threshold = max * 0.1;
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] <= threshold) {
+            count = count + 1;
+            console.log('Аномально низкое значение: ' + arr[i]);
+        }
+    }
+    return count;
+}
+
 const max = findMax(measurements);
 const min = Math.min.apply(null, measurements);
 const average = getSum(measurements) / measurements.length;
 const aboveAverage = filterAboveAverage(measurements);
-
-const threshold = max * 0.1;
-let lowCount = 0;
-
-for (let i = 0; i < measurements.length; i++) {
-    if (measurements[i] <= threshold) {
-        lowCount = lowCount + 1;
-        console.log('Аномально низкое значение: ' + measurements[i]);
-    }
-}
+const lowCount = countAnomalies(measurements);
 
 alert('Среднее значение – ' + average + ', ' + aboveAverage.length + ' измерений – выше среднего');
 console.log('Количество аномально низких значений: ' + lowCount);
